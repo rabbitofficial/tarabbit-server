@@ -4,7 +4,7 @@ When a user opens a webapp in Telegram, it will post a basic user info to server
 If the user exists in DB, it will return user related infomation.
 If the user does not exist in DB, the server will create a user record in DB and return user related infomation.
 
-BTW, in the future, we perhanps need more user related infomation lile: wallet address, token count, nft..
+BTW, in the future, we perhaps need more user related infomation like: wallet address, token count, nft..
 
 **URL** : `/api/tg/login`
 **Method** : `POST`
