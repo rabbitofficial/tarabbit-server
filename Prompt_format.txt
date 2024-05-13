@@ -1,0 +1,10 @@
+query
+card_1
+card_2
+card_3
+
+English
+prompt = I want to know {query} + and Here're the Tarot cards I draw {card_1}, {card_2} and {card_3}
+
+Chinese
+prompt = 帮我算一下{query}，这是我抽到的三张塔罗牌{card_1},{card_2}, {card_3} 
