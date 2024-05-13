@@ -1,0 +1,7 @@
+#ignore all the ide files for intellij
+*.iml
+*.ipr
+*.iws
+.idea/
+#ignore all the maven files
+target/
