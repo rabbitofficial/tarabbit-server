@@ -14,6 +14,7 @@
 {
   "userId": "123456",
   "tarotCards": ["The Fool", "The Magician", "The High Priestess"]
+  "query":["I want to know my relationship status in the next 6 months"]
 }
 ```
 
@@ -33,6 +34,7 @@
 | --- | --- | --- |
 | `userId` | String | The unique identifier of the user. |
 | `tarotCards` | Array of Strings | The list of Tarot cards for the reading. |
+| 'query' | String | The selected query user choose for fortune telling |
 
 **Response Parameters:**
 
