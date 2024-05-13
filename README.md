@@ -13,7 +13,7 @@
 ```json
 {
   "userId": "123456",
-  "tarotCards": ["The Fool", "The Magician", "The High Priestess"]
+  "tarotCards": ["The Fool", "The Magician", "The High Priestess"],
   "query": ["I want to know my relationship status in the next 6 months"]
 }
 ```
