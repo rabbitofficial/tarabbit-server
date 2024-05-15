@@ -7,7 +7,7 @@
 __pycache__/
 
 # Ignore environment related files
-venv/
+tarabbit-server-env/
 
 # Ignore IDE related files
 .idea/
