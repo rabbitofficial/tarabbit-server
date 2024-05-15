@@ -7,7 +7,6 @@
 __pycache__/
 
 # Ignore environment related files
-.env
 venv/
 
 # Ignore IDE related files
