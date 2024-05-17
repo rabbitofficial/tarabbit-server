@@ -1,3 +1,29 @@
+## Run Project Locally
+
+Follow these steps to run the application locally:
+
+1. Create a virtual environment:
+    ```shell
+    python -m venv venv
+    ```
+
+2. Activate the virtual environment:
+    ```powershell
+    .\venv\Scripts\Activate.ps1
+    ```
+
+3. Install the required packages:
+    ```shell
+    pip install -r .\requirements.txt
+    ```
+
+4. Run the application:
+    ```shell
+    uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ```
+
+After running the application, you can access the Swagger API documentation at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+
 ## API Documentation
 
 ### 1. Check My Fortune
@@ -107,3 +133,5 @@ BTW, in the future, we perhaps need more user related infomation like: wallet ad
 | --- | --- | --- |
 | `errors` | Object | An object containing error information. |
 | `errors.info` | String | A string describing the error. |
+
+
