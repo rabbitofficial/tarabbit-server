@@ -12,8 +12,13 @@ openai.api_key = settings.OPENAI_API_KEY
 def generate_fortune(prompt: str) -> str:
     logger.info("Generating fortune for prompt: %s", prompt)
     try:
-        response = openai.Completion.create(engine="text-davinci-003", prompt=prompt, max_tokens=100)
-        fortune = response.choices[0].text.strip()
+        response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=2048)
+        fortune = response.choices[0].message.content
         logger.info("Generated fortune: %s", fortune)
         return fortune
     except Exception as e:
