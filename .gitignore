@@ -20,3 +20,6 @@ tarabbit-server-env/
 # Ignore OS generated files
 .DS_Store
 Thumbs.db
+
+# Create virtual enviornment
+venv/
