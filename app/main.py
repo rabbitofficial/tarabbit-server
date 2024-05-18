@@ -6,10 +6,18 @@ from app.api.endpoints import fortune, telegram
 from app.services.telegram_service import start_bot_polling
 from app.utils.logging import get_logger
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
 # Initialize the FastAPI app
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Get a logger instance for this module
 logger = get_logger(__name__)
 
