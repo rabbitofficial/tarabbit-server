@@ -18,5 +18,14 @@ services:
     ports:
       - "27017:27017"
 
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - tarabbit-server
+
 volumes:
   mongodb_data:
