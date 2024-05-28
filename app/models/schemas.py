@@ -20,7 +20,7 @@ class TelegramLoginRequest(BaseModel):
     language_code: str
 
 
-class UserDB(BaseModel):
+class User(BaseModel):
     id: Optional[str]
     tg_id: str
     name: Optional[str]
