@@ -36,20 +36,7 @@ def run_uvicorn():
 
 if __name__ == "__main__":
     logger.info("Starting application")
+    asyncio.run(start_bot())
+    run_uvicorn()
+# app/utils/logging.py
 
-    # Create the asyncio event loop
-    loop = asyncio.get_event_loop()
-
-    # Schedule the Telegram bot polling in the background
-    loop.create_task(start_bot())
-
-    # Run the Uvicorn server in the foreground
-    loop.run_in_executor(None, run_uvicorn)
-
-    # Run the event loop
-    try:
-        loop.run_forever()
-    except KeyboardInterrupt:
-        pass
-    finally:
-        loop.close()
