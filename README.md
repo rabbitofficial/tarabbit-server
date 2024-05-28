@@ -134,4 +134,9 @@ BTW, in the future, we perhaps need more user related infomation like: wallet ad
 | `errors` | Object | An object containing error information. |
 | `errors.info` | String | A string describing the error. |
 
+## Build With Docker locally
 
+```shell
+docker build -t tarabbit-server -f docker/Dockerfile .
+docker run -d -p 8000:8000 tarabbit-server
+```
