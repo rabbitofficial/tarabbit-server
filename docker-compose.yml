@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   tarabbit-server:
+    restart: always
     build:
       context: .
       dockerfile: docker/Dockerfile
@@ -13,11 +14,22 @@ services:
 
   mongodb:
     image: mongo:latest
+    restart: always
     volumes:
       - mongodb_data:/data/db
     ports:
       - "27017:27017"
 
+  tarot_webapp:
+    image: node:latest
+    container_name: tarot_webapp
+    restart: always
+    volumes:
+      - /tarabbit/webapp/:/app/
+    #command: sh -c "cd /app/ && npm run dev"
+    command: sh -c "cd /app/ && npm run build && npm run preview"
+    ports:
+      - 31313:5173
   # nginx:
   #   image: nginx:latest
   #   volumes:
