@@ -38,5 +38,4 @@ if __name__ == "__main__":
     logger.info("Starting application")
     asyncio.run(start_bot())
     run_uvicorn()
-# app/utils/logging.py
 
