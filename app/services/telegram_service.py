@@ -23,6 +23,7 @@ def handle_play_button(update, context):
 
 
 async def start_bot_polling():
+    queue = asyncio.Queue()
     updater = Updater(token=settings.TELEGRAM_TOKEN, use_context=True)
     start_handler = CommandHandler('start', start)
     play_button_handler = CallbackQueryHandler(handle_play_button, pattern='play')
@@ -34,7 +35,7 @@ async def start_bot_polling():
 
     try:
         while True:
-            await asyncio.sleep(10)
+            await asyncio.sleep(600)
             logger.info("Polling is ongoing...")
     except asyncio.CancelledError:
         logger.info("Polling has been cancelled")
