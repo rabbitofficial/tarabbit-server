@@ -34,7 +34,7 @@ async def run():
     # Create a task for the bot and run the FastAPI server
     bot_task = asyncio.create_task(start_bot())
     # Run the FastAPI server
-    config = uvicorn.Config("main:app", host="0.0.0.0", port=8000, reload=True)
+    config = uvicorn.Config("main:app", host="0.0.0.0", port=8001, reload=True)
     server = uvicorn.Server(config)
     await asyncio.gather(server.serve(), bot_task)
 
