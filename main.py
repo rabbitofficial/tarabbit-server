@@ -30,10 +30,14 @@ async def start_bot():
     await start_bot_polling()
 
 
-def run_uvicorn():
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
-
+async def run():
+    # Create a task for the bot and run the FastAPI server
+    bot_task = asyncio.create_task(start_bot())
+    # Run the FastAPI server
+    config = uvicorn.Config("main:app", host="0.0.0.0", port=8000, reload=True)
+    server = uvicorn.Server(config)
+    await asyncio.gather(server.serve(), bot_task)
 
 if __name__ == "__main__":
     logger.info("Starting application")
-    asyncio.run(asyncio.gather(start_bot(), run_uvicorn()))
+    asyncio.run(run())
