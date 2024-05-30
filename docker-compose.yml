@@ -35,7 +35,7 @@ services:
   #   volumes:
   #     - ./nginx/nginx.conf:/etc/nginx/conf.d
   #   ports:
-  #     - "8081:80"
+  #     - "8081:801"
   #   depends_on:
   #     - tarabbit-server
 
