@@ -12,5 +12,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Make port 8001 available to the world outside this container
 EXPOSE 8001
 
-# Run the command to start uVicorn server
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8001"]
+# Run the main.py program when the container launches
+CMD ["python", "app/main.py"]

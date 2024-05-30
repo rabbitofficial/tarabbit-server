@@ -13,7 +13,6 @@ bot = Bot(token=settings.TELEGRAM_TOKEN)
 
 
 def start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=settings.WELCOME_MESSAGE)
     play_button = InlineKeyboardButton("Play \u25B6", callback_data='play')
     keyboard = InlineKeyboardMarkup([[play_button]])
     context.bot.send_message(chat_id=update.effective_chat.id, text=settings.WELCOME_MESSAGE, reply_markup=keyboard)
@@ -33,6 +32,12 @@ async def start_bot_polling():
     updater.start_polling()
     logger.info("Telegram bot polling started")
 
-    # Using asyncio to keep the bot running
-    while True:
-        await asyncio.sleep(3600)
+    try:
+        while True:
+            await asyncio.sleep(10)
+            logger.info("Polling is ongoing...")
+    except asyncio.CancelledError:
+        logger.info("Polling has been cancelled")
+    finally:
+        updater.stop()
+        logger.info("Telegram bot polling stopped")
