@@ -36,5 +36,4 @@ def run_uvicorn():
 
 if __name__ == "__main__":
     logger.info("Starting application")
-    asyncio.run(start_bot())
-    run_uvicorn()
+    asyncio.run(asyncio.gather(start_bot(), run_uvicorn()))
