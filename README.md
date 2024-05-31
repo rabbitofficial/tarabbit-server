@@ -40,8 +40,8 @@ After running the application, you can access the Swagger API documentation at [
 {
   "userId": "123456",
   "tarotCards": ["The Fool", "The Magician", "The High Priestess"],
-  "query": ["I want to know my relationship status in the next 6 months"]
-}
+  "query": "Can you please share some guidance to me in 6 months?"
+} 
 ```
 
 **Response:**
@@ -140,3 +140,7 @@ BTW, in the future, we perhaps need more user related infomation like: wallet ad
 docker build -t tarabbit-server -f docker/Dockerfile .
 docker run -d -p 8000:8000 tarabbit-server
 ```
+
+## TODO:
+
+- [ ] Properly handle exceptions and errors, using exception handling and logging.
