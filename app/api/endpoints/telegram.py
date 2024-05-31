@@ -1,8 +1,13 @@
 # app/api/endpoints/telegram.py
-from fastapi import APIRouter, HTTPException
+import json
+
+from fastapi import APIRouter, HTTPException, Request
 from pymongo import MongoClient
 from pydantic import ValidationError
-from app.models.schemas import TelegramLoginRequest, User
+from starlette import status
+from starlette.responses import JSONResponse
+
+from app.models.schemas import TelegramLoginRequest, User, TelegramLoginResponse
 
 router = APIRouter()
 
@@ -10,24 +15,41 @@ client = MongoClient('mongodb://localhost:27017/')
 db = client['rabbitDB']
 users = db['users']
 
-@router.post("/login")
-async def telegram_login(request: TelegramLoginRequest):
+
+@router.post("/api/tg/login")
+async def telegram_login(request: Request):
     try:
-        login = TelegramLoginRequest(**request.dict())
+        body = await request.json()
+        login = TelegramLoginRequest(**body)
+    except json.JSONDecodeError as e:
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"detail": "Invalid JSON payload"})
     except ValidationError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"detail": e.errors()})
+    except Exception as e:
+        return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            content={"detail": f"Internal server error: {str(e)}"})
 
     existing_user = users.find_one({"tg_id": login.tg_id})
-    if existing_user is not None:
-        return
 
-    user = User(
-        tg_id=login.tg_id,
-        first_name=login.first_name,
-        last_name=login.last_name,
-        username=login.username,
-        language_code=telegram_login.language_code
-    )
-    users.insert_one(user.dict())
+    if existing_user is None:
+        try:
+            user = User(
+                tg_id=login.tg_id,
+                first_name=login.first_name,
+                last_name=login.last_name,
+                username=login.username,
+                language_code=login.language_code
+            )
+            users.insert_one(user.dict())
+        except AttributeError as e:
+            return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST,
+                                content={"detail": f"Invalid request: Missing or invalid field '{str(e)}'"})
+        except Exception as e:
+            return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                                content={"detail": f"Internal server error: {str(e)}"})
 
-    return user.dict()
+    else:
+        user = User(**existing_user)
+
+    response = TelegramLoginResponse(**user.dict())
+    return response.dict()
