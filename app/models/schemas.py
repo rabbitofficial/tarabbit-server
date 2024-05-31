@@ -20,8 +20,14 @@ class TelegramLoginRequest(BaseModel):
     language_code: str
 
 
+class TelegramLoginResponse(BaseModel):
+    tg_id: str
+    first_name: str
+    last_name: str
+    language_code: str
+
+
 class User(BaseModel):
-    id: Optional[str]
     tg_id: str
     name: Optional[str]
     email: Optional[str]

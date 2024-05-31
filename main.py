@@ -2,6 +2,7 @@
 
 import asyncio
 from fastapi import FastAPI
+
 from app.api.endpoints import fortune, telegram
 from app.services.telegram_service import start_bot_polling
 from app.utils.logging import get_logger
