@@ -9,35 +9,29 @@ services:
       - "8001:8001"
     depends_on:
       - mongodb
-    environment:
-      - MONGODB_URI=mongodb://mongodb:27017
 
   mongodb:
-    image: mongo:latest
-    restart: always
-    volumes:
-      - mongodb_data:/data/db
+    image: mongo
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: m7G260L2vLeb
+      MONGO_INITDB_DATABASE: mydatabase
     ports:
       - "27017:27017"
+    networks:
+      - mynetwork
 
   tarot_webapp:
     image: node:latest
     container_name: tarot_webapp
-    restart: always
+    restart: always 
     volumes:
       - /tarabbit/webapp/:/app/
     #command: sh -c "cd /app/ && npm run dev"
     command: sh -c "cd /app/ && npm run build && npm run preview"
     ports:
       - 31313:5173
-  # nginx:
-  #   image: nginx:latest
-  #   volumes:
-  #     - ./nginx/nginx.conf:/etc/nginx/conf.d
-  #   ports:
-  #     - "8081:801"
-  #   depends_on:
-  #     - tarabbit-server
 
 volumes:
   mongodb_data:
