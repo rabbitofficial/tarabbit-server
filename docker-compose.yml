@@ -17,7 +17,7 @@ services:
     volumes:
       - mongodb_data:/data/db
     ports:
-      - "27017:27017"
+      - "37027:27017"
 
   tarot_webapp:
     image: node:latest
@@ -28,7 +28,23 @@ services:
     #command: sh -c "cd /app/ && npm run dev"
     command: sh -c "cd /app/ && npm run build && npm run preview"
     ports:
-      - "31313:5173"
+      - 31313:5173
+  # tarabbit_bot:
+  #   image: nikolaik/python-nodejs:latest
+  #   container_name: tarabbit_bot
+  #   restart: always
+  #   volumes:
+  #     - tarabbit-server/:/main/
+  #   command: sh -c "cd /main/ && pip install -r ./requirements.txt && npx nodemon bot.py"
+  #   #command: sh -c "cd /main/ && pip install -r ./requirements.txt && python -m main"
+  #   #command: sh -c "cd /main/ && pip install -r ./requirements.txt && uvicorn main:app --reload --port 25000"
+  #   ports:
+  #     - "25001:25001"
+  #   logging:
+  #     options:
+  #       max-size: "12m"
+  #       max-file: "5"
+  #     driver: json-file
 
 volumes:
   mongodb_data:
