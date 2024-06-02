@@ -13,22 +13,20 @@ bot = Bot(token=settings.TELEGRAM_TOKEN)
 
 
 def start(update, context):
-    play_button = InlineKeyboardButton("Play \u25B6", callback_data='play')
+    user = update.effective_user
+    username = user.username if user.username else user.first_name
+    updated_message = f"Hello, {username}! {settings.WELCOME_MESSAGE}"
+    web_app_url = "https://t.me/Tarabbit_bot/myapp"
+    play_button = InlineKeyboardButton("Play \u25B6", url=web_app_url)
     keyboard = InlineKeyboardMarkup([[play_button]])
-    context.bot.send_message(chat_id=update.effective_chat.id, text=settings.WELCOME_MESSAGE, reply_markup=keyboard)
-
-
-def handle_play_button(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Play button pressed!")
+    context.bot.send_message(chat_id=update.effective_chat.id, text=updated_message, reply_markup=keyboard)
 
 
 async def start_bot_polling():
     queue = asyncio.Queue()
     updater = Updater(token=settings.TELEGRAM_TOKEN, use_context=True)
     start_handler = CommandHandler('start', start)
-    play_button_handler = CallbackQueryHandler(handle_play_button, pattern='play')
     updater.dispatcher.add_handler(start_handler)
-    updater.dispatcher.add_handler(play_button_handler)
 
     updater.start_polling()
     logger.info("Telegram bot polling started")
