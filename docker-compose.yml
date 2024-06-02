@@ -19,8 +19,6 @@ services:
       MONGO_INITDB_DATABASE: mydatabase
     ports:
       - "27017:27017"
-    networks:
-      - mynetwork
 
   tarot_webapp:
     image: node:latest

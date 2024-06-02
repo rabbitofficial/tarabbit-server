@@ -8,10 +8,11 @@ from starlette import status
 from starlette.responses import JSONResponse
 
 from app.models.schemas import TelegramLoginRequest, User, TelegramLoginResponse
+from config import settings
 
 router = APIRouter()
 
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient(settings.MONGO_URI)
 db = client['rabbitDB']
 users = db['users']
 
