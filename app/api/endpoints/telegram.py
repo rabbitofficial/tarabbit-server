@@ -18,10 +18,9 @@ users = db['users']
 
 
 @router.post("/api/tg/login")
-async def telegram_login(request: Request):
+async def telegram_login(request: TelegramLoginRequest):
     try:
-        body = await request.json()
-        login = TelegramLoginRequest(**body)
+        login = TelegramLoginRequest(**request.dict())
     except json.JSONDecodeError as e:
         return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"detail": "Invalid JSON payload"})
     except ValidationError as e:

@@ -11,25 +11,24 @@ services:
       - mongodb
 
   mongodb:
-    image: mongo
-    container_name: mongodb
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: m7G260L2vLeb
-      MONGO_INITDB_DATABASE: mydatabase
+    image: mongo:latest
+    container_name: mongodb-tarabbit
+    restart: always
+    volumes:
+      - mongodb_data:/data/db
     ports:
       - "27017:27017"
 
   tarot_webapp:
     image: node:latest
     container_name: tarot_webapp
-    restart: always 
+    restart: always
     volumes:
       - /tarabbit/webapp/:/app/
     #command: sh -c "cd /app/ && npm run dev"
     command: sh -c "cd /app/ && npm run build && npm run preview"
     ports:
-      - 31313:5173
+      - "31313:5173"
 
 volumes:
   mongodb_data:

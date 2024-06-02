@@ -39,6 +39,7 @@ async def run():
     server = uvicorn.Server(config)
     await asyncio.gather(server.serve(), bot_task)
 
+
 if __name__ == "__main__":
     logger.info("Starting application")
     asyncio.run(run())
