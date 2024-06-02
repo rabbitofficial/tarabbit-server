@@ -18,7 +18,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: m7G260L2vLeb
       MONGO_INITDB_DATABASE: mydatabase
     ports:
-      - "27017:27017"
+      - "37027:27017"
 
   tarot_webapp:
     image: node:latest
