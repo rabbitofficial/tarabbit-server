@@ -19,15 +19,18 @@ class TelegramLoginRequest(BaseModel):
     username: str
     language_code: str
 
+
 class TelegramLoginRequestUpdate(BaseModel):
     tg_id: str
     first_name: str
+
 
 class TelegramLoginResponse(BaseModel):
     tg_id: str
     first_name: str
     last_name: str
     language_code: str
+
 
 class User(BaseModel):
     tg_id: str
@@ -52,3 +55,11 @@ class User(BaseModel):
     update_at: Optional[datetime]
     is_premium: Optional[bool]
     photo_url: Optional[str]
+
+
+class TarotRules(BaseModel):
+    rule_name: str
+    flip_card_deduction: int
+    roll_added_points: int
+    every_day_sent_rolls: int
+    default_question_list: List[str]
