@@ -142,7 +142,7 @@ async def telegram_login_update(request: TelegramLoginRequestUpdate):
 
 
 @router.post("/api/tg/tarot_rules/add")
-async def telegram_rules(request: TarotRules):
+async def telegram_rules_add(request: TarotRules):
     try:
         ruleData = TarotRules(**request.dict())
     except json.JSONDecodeError as e:
@@ -183,7 +183,7 @@ async def telegram_rules(request: TarotRules):
 
 
 @router.post("/api/tg/tarot_rules/update")
-async def telegram_rules(request: TarotRules):
+async def telegram_rules_update(request: TarotRules):
     try:
         ruleData = TarotRules(**request.dict())
     except json.JSONDecodeError as e:
