@@ -19,13 +19,15 @@ class TelegramLoginRequest(BaseModel):
     username: str
     language_code: str
 
+class TelegramLoginRequestUpdate(BaseModel):
+    tg_id: str
+    first_name: str
 
 class TelegramLoginResponse(BaseModel):
     tg_id: str
     first_name: str
     last_name: str
     language_code: str
-
 
 class User(BaseModel):
     tg_id: str
