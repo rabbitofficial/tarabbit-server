@@ -13,6 +13,7 @@ from app.models.schemas import (
     User,
     TelegramLoginResponse,
     TelegramLoginRequestUpdate,
+    TarotRules,
 )
 from config import settings
 
@@ -21,6 +22,7 @@ router = APIRouter()
 client = MongoClient(settings.MONGO_URI)
 db = client["rabbitDB"]
 users = db["users"]
+tarot_rules = db["tarot_rules"]
 
 
 @router.post("/api/tg/login")
@@ -137,3 +139,117 @@ async def telegram_login_update(request: TelegramLoginRequestUpdate):
             )
 
     return {"status": "ok"}
+
+
+@router.post("/api/tg/tarot_rules/add")
+async def telegram_rules(request: TarotRules):
+    try:
+        ruleData = TarotRules(**request.dict())
+    except json.JSONDecodeError as e:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={"detail": "Invalid JSON payload"},
+        )
+    except ValidationError as e:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST, content={"detail": e.errors()}
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": f"Internal server error: {str(e)}"},
+        )
+    try:
+        rule = TarotRules(
+            rule_name=ruleData.rule_name,
+            flip_card_deduction=ruleData.flip_card_deduction,
+            roll_added_points=ruleData.roll_added_points,
+            every_day_sent_rolls=ruleData.every_day_sent_rolls,
+            default_question_list=ruleData.default_question_list,
+        )
+        tarot_rules.insert_one(rule.dict())
+    except AttributeError as e:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={"detail": f"Invalid request: Missing or invalid field '{str(e)}'"},
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": f"Internal server error: {str(e)}"},
+        )
+
+    return {"status": "ok add"}
+
+
+@router.post("/api/tg/tarot_rules/update")
+async def telegram_rules(request: TarotRules):
+    try:
+        ruleData = TarotRules(**request.dict())
+    except json.JSONDecodeError as e:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={"detail": "Invalid JSON payload"},
+        )
+    except ValidationError as e:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST, content={"detail": e.errors()}
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": f"Internal server error: {str(e)}"},
+        )
+    existing_rule = tarot_rules.find_one({"rule_name": ruleData.rule_name})
+
+    if existing_rule is None:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={"detail": "Rule does not exist!"},
+        )
+    else:
+        try:
+            rule = TarotRules(
+                rule_name=ruleData.rule_name,
+                flip_card_deduction=ruleData.flip_card_deduction,
+                roll_added_points=ruleData.roll_added_points,
+                every_day_sent_rolls=ruleData.every_day_sent_rolls,
+                default_question_list=ruleData.default_question_list,
+            )
+
+            tarot_rules.update_one(
+                {"rule_name": ruleData.rule_name}, {"$set": rule.dict()}
+            )
+
+        except AttributeError as e:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={
+                    "detail": f"Invalid request: Missing or invalid field '{str(e)}'"
+                },
+            )
+        except Exception as e:
+            return JSONResponse(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                content={"detail": f"Internal server error: {str(e)}"},
+            )
+
+    return {"status": "ok update"}
+
+
+@router.get("/api/tg/tarot_rules/fetch")
+async def telegram_rules_fetch(rule_name: str):
+    if isinstance(rule_name, str):
+        existing_rule = tarot_rules.find_one({"rule_name": "rule1"})
+        if existing_rule is None:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={"detail": "Rule does not exist!"},
+            )
+        else:
+            return json.loads(json.dumps(existing_rule, default=str))
+    else:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={"detail": "Invalid request: Missing or invalid param"},
+        )
