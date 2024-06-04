@@ -122,9 +122,12 @@ async def telegram_login_update(request: TelegramLoginRequestUpdate):
         )
     else:
         try:
-            users.update_one(
-                {"tg_id": login.tg_id}, {"$set": {"first_name": login.first_name}}
-            )
+            not_none_fields = {
+                k: v
+                for k, v in login.dict().items()
+                if v is not None and k is not "tg_id"
+            }
+            users.update_one({"tg_id": login.tg_id}, {"$set": not_none_fields})
         except AttributeError as e:
             return JSONResponse(
                 status_code=status.HTTP_400_BAD_REQUEST,
