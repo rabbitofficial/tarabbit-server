@@ -25,7 +25,7 @@ logger = get_logger(__name__)
 # Include the routers for API endpoints
 app.include_router(fortune.router, prefix="/fortune", tags=["fortune"])
 app.include_router(telegram.router, prefix="/telegram", tags=["telegram"])
-
+app.include_router(telegram.router, prefix="/referral", tags=["referral"])
 
 async def start_bot():
     await start_bot_polling()

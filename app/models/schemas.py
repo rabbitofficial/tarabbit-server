@@ -31,6 +31,24 @@ class TelegramLoginResponse(BaseModel):
     last_name: str
     language_code: str
 
+class ReferralRequest(BaseModel):
+    referrer_id: str
+    referred_id: str
+
+class ReferralResponse(BaseModel):
+    id: str
+    referrer_id: str
+    referred_id: str
+    status: str
+
+class ReferralFetchRequest(BaseModel):
+    id: str
+    referrer_id: str
+
+class ReferralUpdateRequest(BaseModel):
+    id: str
+    status: str
+
 
 class User(BaseModel):
     tg_id: str
@@ -63,3 +81,10 @@ class TarotRules(BaseModel):
     roll_added_points: int
     every_day_sent_rolls: int
     default_question_list: List[str]
+
+class Referral(BaseModel):
+    id: str
+    referrer_id: str
+    referred_id: str
+    status: str
+    created_at: datetime
