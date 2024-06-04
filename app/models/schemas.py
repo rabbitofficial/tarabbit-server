@@ -22,7 +22,26 @@ class TelegramLoginRequest(BaseModel):
 
 class TelegramLoginRequestUpdate(BaseModel):
     tg_id: str
-    first_name: str
+    name: Optional[str]
+    email: Optional[str]
+    points: Optional[int]
+    level: Optional[int]
+    group: Optional[str]
+    left_roll_times: Optional[int]
+    total_rolled_times: Optional[int]
+    first_name: Optional[str]
+    last_name: Optional[str]
+    username: Optional[str]
+    invited_total_friends: Optional[int]
+    invited_normal_friends: Optional[int]
+    invited_premium_friends: Optional[int]
+    tarot_requested_times: Optional[int]
+    language_code: Optional[str]
+    joined_community: Optional[bool]
+    joined_X: Optional[bool]
+    update_at: Optional[datetime]
+    is_premium: Optional[bool]
+    photo_url: Optional[str]
 
 
 class TelegramLoginResponse(BaseModel):
