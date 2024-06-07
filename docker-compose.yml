@@ -4,7 +4,6 @@ services:
     image: python:3.9-slim-buster
     container_name: tarabbit-server
     restart: always
-    working_dir: /app
     volumes:
       - .:/app
     #build:
