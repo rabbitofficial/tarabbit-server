@@ -6,14 +6,14 @@ import uuid
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
-from app.models.schemas import (
+from models.schemas import (
     User,
     ReferralRequest,
     ReferralResponse,
     ReferralFetchRequest,
     ReferralUpdateRequest,
 )
-from app.api.endpoints.telegram import users, db
+from api.endpoints.telegram import users, db
 
 router = APIRouter()
 

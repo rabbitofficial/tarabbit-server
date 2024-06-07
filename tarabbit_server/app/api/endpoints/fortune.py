@@ -4,9 +4,9 @@ from fastapi import APIRouter, HTTPException
 from starlette import status
 from starlette.responses import JSONResponse
 
-from app.api.endpoints.telegram import users
-from app.models.schemas import FortuneRequest
-from app.services.openai_service import generate_fortune
+from api.endpoints.telegram import users
+from models.schemas import FortuneRequest
+from services.openai_service import generate_fortune
 
 router = APIRouter()
 
