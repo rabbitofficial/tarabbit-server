@@ -10,7 +10,7 @@ ADD . /app
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 # Make port 8001 available to the world outside this container
-EXPOSE 8001
+EXPOSE 8081
 
 # Run the main.py program when the container launches
-CMD ["python", "main.py"]
+CMD ["python", "app/main.py"]
