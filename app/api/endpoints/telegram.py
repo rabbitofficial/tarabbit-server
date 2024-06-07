@@ -76,7 +76,7 @@ async def telegram_login(request: TelegramLoginRequest):
     return response.dict()
 
 
-@router.get("/api/tg/login/fetch")
+@router.get("/api/tg/login/fetch2")
 async def telegram_login_fetch(tg_id: str):
     if isinstance(tg_id, str):
         existing_user = users.find_one({"tg_id": tg_id}, {"_id": 0})
