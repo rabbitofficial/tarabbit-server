@@ -5,7 +5,7 @@ services:
     container_name: tarabbit-server
     restart: always
     volumes:
-      - .:/app
+      - /var/lib/docker/volumes/portainer_data/_data/compose/14:/app
     #build:
     #  context: .
     #  dockerfile: Dockerfile
