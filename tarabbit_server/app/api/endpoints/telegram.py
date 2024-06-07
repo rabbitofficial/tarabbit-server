@@ -8,14 +8,14 @@ from starlette import status
 from starlette.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 
-from app.models.schemas import (
+from models.schemas import (
     TelegramLoginRequest,
     User,
     TelegramLoginResponse,
     TelegramLoginRequestUpdate,
     TarotRules,
 )
-from config import settings
+from core.config import settings
 
 router = APIRouter()
 
@@ -125,7 +125,7 @@ async def telegram_login_update(request: TelegramLoginRequestUpdate):
             not_none_fields = {
                 k: v
                 for k, v in login.dict().items()
-                if v is not None and k is not "tg_id"
+                if v != None and k != "tg_id"
             }
             users.update_one({"tg_id": login.tg_id}, {"$set": not_none_fields})
         except AttributeError as e:
