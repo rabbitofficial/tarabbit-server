@@ -4,12 +4,13 @@ services:
     image: python:3.9-slim-buster
     container_name: tarabbit-server
     restart: always
+    working_dir: /app
+    volumes:
+      - .:/app
     #build:
     #  context: .
     #  dockerfile: Dockerfile
-    volumes:
-      - tarabbit_server_data/:/main/
-    command: sh -c "cd /main/ && pip install -r ./requirements.txt && python -m main"
+    command: sh -c "cd /app/ && pip install -r ./requirements.txt && python -m main"
     ports:
       - "8001:8001"
     depends_on:
@@ -53,4 +54,3 @@ services:
 
 volumes:
   mongodb_data:
-  tarabbit_server_data:
