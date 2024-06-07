@@ -26,3 +26,6 @@ venv/
 
 # Ignore all app.log files
 app.log
+
+# Ignore all app.log files
+*._*
