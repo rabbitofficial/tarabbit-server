@@ -1,5 +1,5 @@
 import asyncio
-from app.services.telegram_service import start_bot_polling
+from services.telegram_service import start_bot_polling
 
 async def start_bot():
     await start_bot_polling()

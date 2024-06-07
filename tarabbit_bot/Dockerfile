@@ -1,4 +1,4 @@
-FROM nikolaik/python-nodejs:latest
+FROM python:3.9-slim as builder
 
 # Set the working directory in the container to /app
 WORKDIR /app
@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Make port 80 available to the world outside this container
 EXPOSE 80
 
-CMD ["python", "main.py"]
+CMD ["python", "app/main.py"]
