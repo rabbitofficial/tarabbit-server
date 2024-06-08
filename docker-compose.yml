@@ -5,22 +5,22 @@ services:
     container_name: tarabbit-server
     restart: always
     volumes:
-      - /var/lib/docker/volumes/portainer_data/_data/compose/14:/app
-    command: sh -c "cd /app/ && pip install -r ./requirements.txt && python -m app.main"
+      - ./tarabbit_server/:/app
+    command: sh -c "cd /app && ls -la && pip install -r ./requirements.txt && python app/main.py"
     ports:
-      - "25001:25001"
+      - "8001:8001"
     depends_on:
       - mongodb
 
   tarabbit_bot:
     image: python:3.9-slim-buster
-    container_name: tarabbit_bot
+    container_name: tarabbit-bot
     restart: always
     volumes:
-      - /var/lib/docker/volumes/portainer_data/_data/compose/14:/app
-    command: sh -c "cd /app/ && pip install -r ./requirements.txt && python -m app.main"
+      - ./tarabbit_bot/:/app
+    command: sh -c "cd /app && ls -la && pip install -r ./requirements.txt && python app/main.py"
     ports:
-      - "8002:8002"
+      - "25001:25001"
     depends_on:
       - mongodb
 
