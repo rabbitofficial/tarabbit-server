@@ -3,9 +3,8 @@
 import asyncio
 from fastapi import FastAPI
 
-from app.api.endpoints import fortune, telegram, referrer
-from app.services.telegram_service import start_bot_polling
-from app.utils.logging import get_logger
+from api.endpoints import fortune, telegram, referrer
+from utils.logging import get_logger
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -28,17 +27,11 @@ app.include_router(telegram.router, prefix="/telegram", tags=["telegram"])
 app.include_router(referrer.router, prefix="/referral", tags=["referral"])
 
 
-async def start_bot():
-    await start_bot_polling()
-
-
 async def run():
-    # Create a task for the bot and run the FastAPI server
-    bot_task = asyncio.create_task(start_bot())
     # Run the FastAPI server
     config = uvicorn.Config("main:app", host="0.0.0.0", port=8001, reload=True)
     server = uvicorn.Server(config)
-    await asyncio.gather(server.serve(), bot_task)
+    await server.serve()
 
 
 if __name__ == "__main__":

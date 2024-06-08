@@ -1,8 +1,8 @@
 # app/services/openai_service.py
 
 import openai
-from config import settings
-from app.utils.logging import get_logger
+from core.config import settings
+from utils.logging import get_logger
 
 logger = get_logger(__name__)
 

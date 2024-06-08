@@ -4,8 +4,8 @@ import asyncio
 from telegram import Bot, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CallbackQueryHandler
 from telegram.ext import CommandHandler
-from config import settings
-from app.utils.logging import get_logger
+from core.config import settings
+from utils.logging import get_logger
 
 logger = get_logger(__name__)
 

@@ -13,10 +13,8 @@ with open(config_file_path) as config_file:
 
 
 class Settings:
-    OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY")
     TELEGRAM_TOKEN: str = os.getenv("TELEGRAM_TOKEN")
     WELCOME_MESSAGE: str = configs["welcome_message"]
-    MONGO_URI: str = os.getenv("MONGO_URI")
 
 
 settings = Settings()
