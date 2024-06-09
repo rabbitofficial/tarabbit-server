@@ -47,10 +47,10 @@ async def telegram_login(request: TelegramLoginRequest):
     existing_user = users.find_one({"tg_id": login.tg_id})
 
     # get setting from db
-    appSettings = dbsetting.find_one({"id": "10000"})
+    appSettings = dbsetting.find_one({"id": 10000})
     left_roll_times = 10
     if appSettings is not None:
-        left_roll_times = dict(appSettings).default_rolls
+        left_roll_times = appSettings["default_rolls"]
 
     if existing_user is None:
         try:
