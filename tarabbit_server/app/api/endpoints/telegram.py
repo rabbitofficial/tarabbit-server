@@ -23,7 +23,6 @@ client = MongoClient(settings.MONGO_URI)
 db = client["rabbitDB"]
 users = db["users"]
 tarot_rules = db["tarot_rules"]
-dbsetting = db["setting"]
 
 @router.post("/api/tg/login")
 async def telegram_login(request: TelegramLoginRequest):
@@ -47,10 +46,10 @@ async def telegram_login(request: TelegramLoginRequest):
     existing_user = users.find_one({"tg_id": login.tg_id})
 
     # get setting from db
-    appSettings = dbsetting.find_one({"id": 10000})
+    appSettings = tarot_rules.find_one({"rule_name": "rule1"})
     left_roll_times = 10
     if appSettings is not None:
-        left_roll_times = appSettings["default_rolls"]
+        left_roll_times = appSettings["every_day_sent_rolls"]
 
     if existing_user is None:
         try:
