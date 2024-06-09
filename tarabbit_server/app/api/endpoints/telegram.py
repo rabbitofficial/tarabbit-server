@@ -23,7 +23,7 @@ client = MongoClient(settings.MONGO_URI)
 db = client["rabbitDB"]
 users = db["users"]
 tarot_rules = db["tarot_rules"]
-
+dbsetting = db["setting"]
 
 @router.post("/api/tg/login")
 async def telegram_login(request: TelegramLoginRequest):
@@ -46,6 +46,12 @@ async def telegram_login(request: TelegramLoginRequest):
 
     existing_user = users.find_one({"tg_id": login.tg_id})
 
+    # get setting from db
+    appSettings = dbsetting.find_one({"id": 10000})
+    left_roll_time = 10
+    if appSettings is not None:
+        left_roll_time = appSettings.default_rolls
+
     if existing_user is None:
         try:
             user = User(
@@ -54,6 +60,7 @@ async def telegram_login(request: TelegramLoginRequest):
                 last_name=login.last_name,
                 username=login.username,
                 language_code=login.language_code,
+                left_roll_time=left_roll_time,
             )
             users.insert_one(user.dict())
         except AttributeError as e:
