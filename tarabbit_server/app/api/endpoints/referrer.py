@@ -47,8 +47,8 @@ async def referral(request: ReferralRequest):
     )
     if referral_exists is not None:
         return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={"detail": "Referral already exists!"},
+            status_code=status.HTTP_200_OK,
+            content={"info":"existed","detail": "Referral already exists!"},
         )
     else:
         id = str(uuid.uuid4())
@@ -68,6 +68,7 @@ async def referral(request: ReferralRequest):
                 "referrer_id": referral_request.referrer_id,
                 "referred_id": referral_request.referred_id,
                 "status": "pending",
+                "info": "new"
             },
         )
 
