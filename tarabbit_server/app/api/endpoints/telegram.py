@@ -48,9 +48,9 @@ async def telegram_login(request: TelegramLoginRequest):
 
     # get setting from db
     appSettings = dbsetting.find_one({"id": "10000"})
-    left_roll_time = 10
+    left_roll_times = 10
     if appSettings is not None:
-        left_roll_time = dict(appSettings).default_rolls
+        left_roll_times = dict(appSettings).default_rolls
 
     if existing_user is None:
         try:
@@ -60,7 +60,7 @@ async def telegram_login(request: TelegramLoginRequest):
                 last_name=login.last_name,
                 username=login.username,
                 language_code=login.language_code,
-                left_roll_time=left_roll_time,
+                left_roll_times=left_roll_times,
             )
             users.insert_one(user.dict())
         except AttributeError as e:
