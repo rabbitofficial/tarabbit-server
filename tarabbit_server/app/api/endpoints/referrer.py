@@ -139,3 +139,21 @@ async def referral_update(request: ReferralUpdateRequest):
             )
 
     return {"status": "ok update referal"}
+
+@router.get("/api/referral/getInviteInfo")
+async def referral_fetch(referrer_id: str):
+    if isinstance(referrer_id, str):
+        existing_referral = referrals.find({"referrer_id": int(referrer_id)})
+        if existing_referral is None:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={"detail": "Referral does not exist!"},
+            )
+        else:
+            result = list(existing_referral)
+            return json.loads(json.dumps(result, default=str))
+    else:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={"detail": "Invalid request: Missing or invalid param"},
+        )
