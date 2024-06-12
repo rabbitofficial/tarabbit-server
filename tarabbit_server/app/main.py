@@ -8,6 +8,8 @@ from utils.logging import get_logger
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 
+from services import cron_jobs
+
 # Initialize the FastAPI app
 app = FastAPI()
 
@@ -29,7 +31,7 @@ app.include_router(referrer.router, prefix="/referral", tags=["referral"])
 
 async def run():
     # Run the FastAPI server
-    config = uvicorn.Config("main:app", host="0.0.0.0", port=8001, reload=True)
+    config = uvicorn.Config("main:app", host="0.0.0.0", port=25000, reload=True)
     server = uvicorn.Server(config)
     await server.serve()
 

@@ -8,3 +8,4 @@ requests==2.31.0
 setuptools==69.5.1
 urllib3==1.26.15
 uvicorn==0.17.0
+APScheduler==3.10.4
