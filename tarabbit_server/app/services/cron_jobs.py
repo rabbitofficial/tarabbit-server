@@ -24,7 +24,7 @@ async def reset_rolls():
     print("Number of documents updated")
 
 
-scheduler.add_job(func=reset_rolls, trigger="cron", hour=8, minute=0)
+scheduler.add_job(func=reset_rolls, trigger="cron", hour="*/8")
 # scheduler.add_job(func=reset_rolls, trigger="interval", seconds=3)
 scheduler.start()
 
