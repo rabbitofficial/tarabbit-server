@@ -7,8 +7,7 @@ from utils.decoder import Decoder
 
 logger = get_logger(__name__)
 
-openai.api_key = Decoder.decrypt(settings.ENCRYPTED_API_KEY, settings.SECRET_KEY)
-
+openai.api_key = Decoder.decrypt(settings.SECRET_KEY, settings.ENCRYPTED_API_KEY)
 
 def generate_fortune(prompt: str) -> str:
     logger.info("Generating fortune for prompt: %s", prompt)
