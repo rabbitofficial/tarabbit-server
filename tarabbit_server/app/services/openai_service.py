@@ -3,10 +3,11 @@
 import openai
 from core.config import settings
 from utils.logging import get_logger
+from utils.decoder import Decoder
 
 logger = get_logger(__name__)
 
-openai.api_key = settings.OPENAI_API_KEY
+openai.api_key = Decoder.decrypt(settings.OPENAI_API_KEY, settings.SECRET_KEY)
 
 
 def generate_fortune(prompt: str) -> str:

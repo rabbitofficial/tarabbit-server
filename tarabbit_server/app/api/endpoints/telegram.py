@@ -6,7 +6,6 @@ from pymongo import MongoClient
 from pydantic import ValidationError
 from starlette import status
 from starlette.responses import JSONResponse
-from fastapi.encoders import jsonable_encoder
 
 from models.schemas import (
     TelegramLoginRequest,

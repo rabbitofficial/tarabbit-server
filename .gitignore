@@ -1,4 +1,5 @@
 # .gitignore
+gitignore/
 
 # Ignore Python runtime files
 *.pyc
@@ -7,7 +8,8 @@
 __pycache__/
 
 # Ignore environment related files
-tarabbit-server-env/
+tarabbit_server/.env/
+tarabbit_bot/.env/
 
 # Ignore IDE related files
 .idea/

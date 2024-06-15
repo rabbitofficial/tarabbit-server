@@ -7,13 +7,10 @@ from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 from models.schemas import (
-    User,
     ReferralRequest,
-    ReferralResponse,
-    ReferralFetchRequest,
     ReferralUpdateRequest,
 )
-from api.endpoints.telegram import users, db
+from api.endpoints.telegram import db
 
 router = APIRouter()
 
@@ -138,7 +135,7 @@ async def referral_update(request: ReferralUpdateRequest):
                 content={"detail": f"Internal server error: {str(e)}"},
             )
 
-    return {"status": "ok update referal"}
+    return {"status": "ok update referral"}
 
 @router.get("/api/referral/getInviteInfo")
 async def referral_fetch(referrer_id: str):
