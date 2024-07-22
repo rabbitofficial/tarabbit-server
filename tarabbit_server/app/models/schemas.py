@@ -83,14 +83,14 @@ class User(BaseModel):
     left_roll_times: Optional[int]
     total_rolled_times: Optional[int]
     created_at: Optional[datetime]
-    first_name: str
-    last_name: str
-    username: str
+    first_name: Optional[str]
+    last_name: Optional[str]
+    username: Optional[str]
     invited_total_friends: Optional[int]
     invited_normal_friends: Optional[int]
     invited_premium_friends: Optional[int]
     tarot_requested_times: Optional[int]
-    language_code: str
+    language_code: Optional[str]
     joined_community: Optional[bool]
     joined_X: Optional[bool]
     update_at: Optional[datetime]
