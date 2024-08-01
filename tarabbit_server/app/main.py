@@ -35,7 +35,19 @@ async def run():
     server = uvicorn.Server(config)
     await server.serve()
 
+#  start all the tasks
+async def main():
+    # Gather both the server and the scheduler in the same event loop
+    await asyncio.gather(run())
 
+#  start event loop
 if __name__ == "__main__":
-    logger.info("Starting application")
-    asyncio.run(run())
+    loop = asyncio.get_event_loop()
+    try:
+        loop.run_until_complete(main())
+    except (KeyboardInterrupt, SystemExit):
+        pass
+    finally:
+        loop.run_until_complete(loop.shutdown_asyncgens())
+        loop.close()
+

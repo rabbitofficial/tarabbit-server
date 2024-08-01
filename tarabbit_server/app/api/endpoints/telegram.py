@@ -3,6 +3,7 @@ import json
 
 from fastapi import APIRouter, HTTPException, Request
 from pymongo import MongoClient
+from app.core.config import point_rule
 from pydantic import ValidationError
 from starlette import status
 from starlette.responses import JSONResponse
@@ -59,6 +60,7 @@ async def telegram_login(request: TelegramLoginRequest):
                 username=login.username,
                 language_code=login.language_code,
                 left_roll_times=left_roll_times,
+                level = 0,
             )
             users.insert_one(user.dict())
         except AttributeError as e:
@@ -132,6 +134,16 @@ async def telegram_login_update(request: TelegramLoginRequestUpdate):
                 for k, v in login.dict().items()
                 if v != None and k != "tg_id"
             }
+            if "points" in not_none_fields:
+                level =0
+                level_point_list = point_rule.LEVEL_DEFINE
+                for i,level_point in enumerate(level_point_list):
+                    if not_none_fields["points"] > level_point:
+                        level = 5 - i
+                        break
+                user = users.find_one({"tg_id": login.tg_id}, {'points': 1, '_id': 0, "level": 1})
+                if user["level"] is None or int(user["level"]) < level:
+                    not_none_fields["level"] = level
             users.update_one({"tg_id": login.tg_id}, {"$set": not_none_fields})
         except AttributeError as e:
             return JSONResponse(

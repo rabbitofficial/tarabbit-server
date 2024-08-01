@@ -11,10 +11,12 @@ from models.schemas import (
     ReferralUpdateRequest,
 )
 from api.endpoints.telegram import db
+from app.core.config import point_rule
 
 router = APIRouter()
 
 referrals = db["referrals"]
+users = db["users"]
 
 
 @router.post("/api/referral")
@@ -58,6 +60,32 @@ async def referral(request: ReferralRequest):
                 "created_at": datetime.now(),
             }
         )
+        referred_user = users.find_one({"tg_id": referral_request.referrer_id})
+        if referred_user:
+            if referred_user["is_premium"]:
+                users.update_one({"tg_id": referral_request.referrer_id},
+                                 {"$inc": {"points": point_rule.INVITE_PREMIUM_USER}})
+            else:
+                users.update_one({"tg_id": referral_request.referrer_id},
+                                 {"$inc": {"points": point_rule.INVITE_NORMAL_USER}})
+        invite_user_rewards = {
+            5: point_rule.INVITE_5_USER,
+            20: point_rule.INVITE_20_USER,
+            100: point_rule.INVITE_100_USER,
+        }
+        referred_user_num = referrals.count_documents({"referrer_id": referral_request.referrer_id})
+        if referred_user_num in invite_user_rewards.keys():
+            users.update_one({"tg_id": referral_request.referrer_id}, {"$inc": {"points": invite_user_rewards[referred_user_num]}})
+
+        user = users.find_one({"tg_id": referral_request.referrer_id}, {'points': 1, '_id': 0, "level": 1})
+        level_point_list = point_rule.LEVEL_DEFINE
+        for i, level_point in enumerate(level_point_list):
+            if user["points"] > level_point:
+                level = 5 - i
+                if user["level"] is None or int(user["level"]) < level:
+                    users.update_one({"tg_id": referral_request.referrer_id},
+                                     {"$set": {"level": level}})
+                break
         return JSONResponse(
             status_code=status.HTTP_201_CREATED,
             content={

@@ -20,11 +20,15 @@ scheduler = AsyncIOScheduler()
 
 
 async def reset_rolls():
-    users.update_many({}, {"$inc": {"left_roll_times": 50}})
+    appSettings = tarot_rules.find_one({"rule_name": "rule1"})
+    left_roll_times = 10
+    if appSettings is not None:
+        left_roll_times = appSettings["every_day_sent_rolls"]
+    users.update_many({}, {"$set": {"left_roll_times": left_roll_times}})
     print("Number of documents updated")
 
 
-scheduler.add_job(func=reset_rolls, trigger="cron", hour="*/8")
+scheduler.add_job(func=reset_rolls, trigger="cron", hour=0,minute=0,second=5)
 # scheduler.add_job(func=reset_rolls, trigger="interval", seconds=3)
 scheduler.start()
 
