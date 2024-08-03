@@ -11,7 +11,7 @@ from models.schemas import (
     ReferralUpdateRequest,
 )
 from api.endpoints.telegram import db
-from app.core.config import point_rule
+from core.config import point_rule
 
 router = APIRouter()
 
