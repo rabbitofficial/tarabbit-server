@@ -3,7 +3,7 @@ import json
 
 from fastapi import APIRouter, HTTPException, Request
 from pymongo import MongoClient
-from app.core.config import point_rule
+from core.config import point_rule
 from pydantic import ValidationError
 from starlette import status
 from starlette.responses import JSONResponse
